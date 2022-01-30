@@ -1,0 +1,40 @@
+.App {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  height: 100%;
+}
+
+
+.leaflet-container {
+  width: 80vw;
+  height: 91vh;
+}
+
+.navbar {
+  background-color: #90aacb;
+  height: 10vh;
+  width: 100%;
+  display: flex;
+  color: #ecf4ff;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: start;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 20vw;
+  height: 100%;
+}

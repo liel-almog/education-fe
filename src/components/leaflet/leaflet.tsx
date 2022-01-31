@@ -2,10 +2,11 @@ import { LatLngExpression } from "leaflet";
 import { useMemo } from "react";
 import { MapContainer, Polygon, TileLayer } from "react-leaflet";
 import json from "../../../neighbourhoods.json";
+import colors from '../../styles/color-palette.module.scss';
 import classes from "./leaflet.module.scss";
 
 const Leaflet = () => {
-  const polygonOptions = { color: "white", fillColor: "yellow" };
+  const polygonOptions = { color: "white", fillColor: colors.hookersGreen, fillOpacity: 0.4 };
 
   const multiPolygon = useMemo(() => {
     return json.features.map((feature) => {
@@ -20,6 +21,7 @@ const Leaflet = () => {
       center={[32.077210, 34.799939]}
       zoom={13.2}
       scrollWheelZoom={true}
+      attributionControl={false}
       className={classes.mapContainer}
     >
       <TileLayer

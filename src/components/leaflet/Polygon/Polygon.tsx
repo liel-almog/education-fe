@@ -1,5 +1,11 @@
-import { Icon, latLngBounds, LatLngExpression, PathOptions } from "leaflet";
-import { useMemo } from "react";
+import {
+  Icon,
+  latLngBounds,
+  LatLngExpression,
+  LeafletEventHandlerFnMap,
+  PathOptions
+} from "leaflet";
+import { useContext, useMemo } from "react";
 import {
   Marker,
   Polygon as LeafPolygon,
@@ -7,23 +13,33 @@ import {
   Tooltip,
   useMap
 } from "react-leaflet";
+import SelectedPolygonContext from "../../../contexts/selected-polygon.context";
 import colors from "../../../styles/color-palette.module.scss";
 import { Geometry, School } from "../../../types/area.interface";
 
 export interface PolygonProps extends Omit<LeafPolygonProps, "positions"> {
   geometry: Geometry;
   schools: School[];
+  id: string;
 }
 
-export const Polygon: React.VFC<PolygonProps> = ({ geometry, schools }) => {
+export const Polygon: React.VFC<PolygonProps> = ({ geometry, schools, id }) => {
   const map = useMap();
+  const { selectedPolygon, setSelectedPolygon, findPolygon } = useContext(SelectedPolygonContext);
 
   const polygonOptions: PathOptions = {
     color: "white",
     fillColor: colors.hookersGreen,
-    fillOpacity: 0.4,
+    fillOpacity: selectedPolygon === id ? 0.2 : 0.5,
     fill: true,
     weight: 5,
+  };
+
+  const eventHandlers: LeafletEventHandlerFnMap = {
+    click() {
+      map.fitBounds(latLngBounds(coordinates));
+      setSelectedPolygon(id);
+    },
   };
 
   const coordinates = useMemo(() => {
@@ -47,16 +63,8 @@ export const Polygon: React.VFC<PolygonProps> = ({ geometry, schools }) => {
   }, [schools]);
 
   return (
-    <LeafPolygon
-      eventHandlers={{
-        click() {
-          map.fitBounds(latLngBounds(coordinates));
-        },
-      }}
-      pathOptions={polygonOptions}
-      positions={coordinates}
-    >
-      {schoolsMarkers}
+    <LeafPolygon eventHandlers={eventHandlers} pathOptions={polygonOptions} positions={coordinates}>
+      {selectedPolygon === id && schoolsMarkers}
     </LeafPolygon>
   );
 };

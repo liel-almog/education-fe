@@ -10,6 +10,7 @@ const Leaflet = () => {
       return (
         <Polygon
           key={feature.properties.UniqueId}
+          id={feature.properties.UniqueId}
           geometry={feature.geometry}
           schools={feature.properties.schools}
         ></Polygon>

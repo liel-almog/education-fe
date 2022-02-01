@@ -1,11 +1,12 @@
 import Leaflet from "../components/leaflet/leaflet";
 import { Navbar } from "../components/Navbar";
+import { SelectedPolygonProvider } from "../contexts/selected-polygon.context";
 import "./App.scss";
 
 export default function App() {
   return (
-    <>
-      <header className="navbar" >
+    <SelectedPolygonProvider>
+      <header className="navbar">
         <Navbar></Navbar>
       </header>
       <main className="container">
@@ -16,6 +17,6 @@ export default function App() {
           <Leaflet></Leaflet>
         </section>
       </main>
-    </>
+    </SelectedPolygonProvider>
   );
 }

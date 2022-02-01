@@ -1,6 +1,5 @@
-
-export interface Feature {
-  type: "Feature";
+export interface Polygon {
+  type: string;
   geometry: Geometry;
   properties: Properties;
 }
